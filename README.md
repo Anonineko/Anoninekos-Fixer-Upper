@@ -10,6 +10,18 @@ Fixes broken photo-drone interaction and adds optional quality-of-life / spawn o
 
 **License:** [MIT](./LICENSE) (this mod’s source only — the game remains property of its developer).
 
+### Security / trust (read this)
+
+**Use this mod at your own risk.** Prebuilt DLLs from the internet (including GitHub Releases) are a common way malware is distributed. **This project is not malware**, but you should **not trust random binaries by default** — from this repo or anywhere else.
+
+If you are unsure:
+
+1. **Clone** the source from this repository  
+2. Have an **AI agent** (or a human) **review the code**  
+3. **Build from source** yourself using the steps in [Build from source](#build-from-source)
+
+That path is safer than downloading an unknown `.dll` and dropping it into `BepInEx/plugins/`.
+
 ## Screenshots
 
 | Settings UI | Stage counter | Gallery CG counter |
