@@ -12,13 +12,9 @@ Fixes broken photo-drone interaction and adds optional quality-of-life / spawn o
 
 ## Screenshots
 
-<!-- Upload images to docs/screenshots/ on GitHub (or replace the paths below). -->
-
-![Screenshot 1](docs/screenshots/01.png)
-
-![Screenshot 2](docs/screenshots/02.png)
-
-![Screenshot 3](docs/screenshots/03.png)
+| Settings UI | Stage counter | Gallery CG counter |
+|:-----------:|:-------------:|:------------------:|
+| ![Settings UI](docs/screenshots/SettingsUI.png) | ![Stage counter](docs/screenshots/StageCounter.png) | ![CG counter](docs/screenshots/CGCounter.png) |
 
 ---
 
