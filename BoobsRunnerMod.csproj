@@ -73,5 +73,10 @@
       <HintPath>libs\Unity.TextMeshPro.dll</HintPath>
       <Private>false</Private>
     </Reference>
+    <Reference Include="DOTween">
+      <HintPath>libs\DOTween.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
   </ItemGroup>
 </Project>
+

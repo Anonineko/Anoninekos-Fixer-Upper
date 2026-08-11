@@ -1,8 +1,6 @@
 # Anonineko's Fixer Upper
 
-> **Known issue — settings UI:** The in-game Settings overlay is **borked** (layout/look is rough) but **functional**. Prefer configuring options via the **BepInEx config** instead:
-> `BepInEx/config/com.anonineko.boobsrunnerfixes.cfg`
-> (or a BepInEx config UI plugin such as **ConfigurationManager**, if you use one). Gameplay fixes do not depend on the in-game panel looking good.
+> **Settings UI:** Pause → **Settings** shows a simple IMGUI panel on the right (not styled like the base game). You can also edit `BepInEx/config/com.anonineko.boobsrunnerfixes.cfg` or use ConfigurationManager.
 
 BepInEx plugin for **[Boobs Runner](https://justcallmeneko001.itch.io/boobs-runner)** (Windows, Unity **6000.x Mono**).
 
@@ -11,6 +9,16 @@ Fixes broken photo-drone interaction and adds optional quality-of-life / spawn o
 > **Content note:** the base game is NSFW. This mod only changes gameplay systems (interact, spawns, ledge drop); it does not add assets.
 
 **License:** [MIT](./LICENSE) (this mod’s source only — the game remains property of its developer).
+
+## Screenshots
+
+<!-- Upload images to docs/screenshots/ on GitHub (or replace the paths below). -->
+
+![Screenshot 1](docs/screenshots/01.png)
+
+![Screenshot 2](docs/screenshots/02.png)
+
+![Screenshot 3](docs/screenshots/03.png)
 
 ---
 
@@ -24,6 +32,8 @@ Fixes broken photo-drone interaction and adds optional quality-of-life / spawn o
 | Following drone steals Interact from a bench | **Selector target wins** when it is a bench (or any non-drone). Following drone is only used when nothing better is selected |
 | Any nearby collider exit clears the selector | Selector only clears when the **currently selected** object exits |
 | Pressing Interact in a bad pose can leave photo UI stuck | Failed photos no longer leave `outPhot` enabled; After Phot also hides it |
+| Gallery detail view is **9:16** while photos are **square** | Detail `Image` uses preserve-aspect + square rect |
+| Gallery grid **cannot scroll** to the last rows | Scroll content height is expanded after rearrange |
 
 ### Optional settings (pause menu → **Settings**)
 
@@ -34,6 +44,12 @@ Fixes broken photo-drone interaction and adds optional quality-of-life / spawn o
 | **Force photo drone** | If you have no following photo drone, drone spawners always spawn one |
 | **No drone if have one** | While a photo drone is following, skip new photo-drone spawns |
 | **Down drops ledge** | Down / Slide releases ledge hang and ledge grab |
+| **Show stage counter HUD** | Top-left `Stage: x/total` (stage = kills/10, starts at 0) |
+| **Show gallery CG counter** | Top of gallery: `CGs: unlocked/total` (36 max: 4 poses × stages 0–8) |
+
+During a run, the HUD shows **Stage: x/total** in the top-left (e.g. `Stage: 0/8`). Total auto-detects stage sprites when possible (`HUD` section in config).
+
+Open **Gallery** to see **CGs: x/36** (unlocked photo CGs / total possible).
 
 The same options (plus fine-tuning) live in:
 

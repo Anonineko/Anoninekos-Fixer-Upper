@@ -27,6 +27,10 @@ namespace BoobsRunnerMod
 		internal static ConfigEntry<float> LowHpRatio;
 		internal static ConfigEntry<float> LowHpBenchChance;
 		internal static ConfigEntry<float> NormalBenchChance;
+		internal static ConfigEntry<bool> ShowStageHud;
+		internal static ConfigEntry<bool> StageHudAutoTotal;
+		internal static ConfigEntry<int> StageHudTotal;
+		internal static ConfigEntry<bool> ShowGalleryCgCounter;
 
 		private void Awake()
 		{
@@ -51,12 +55,29 @@ namespace BoobsRunnerMod
 				"When BenchHighWhenLowHp is on and HP is low: % chance to keep each bench (0-100).");
 			NormalBenchChance = Config.Bind("Gameplay", "NormalBenchChance", 100f,
 				"When not full-HP-no-bench and not low-HP boost: % chance to keep each bench (0-100). Vanilla keep-all is 100.");
+			ShowStageHud = Config.Bind("HUD", "ShowStageHud", true,
+				"Show Stage: x/total in the top-left (stage = kills/10, starts at 0).");
+			StageHudAutoTotal = Config.Bind("HUD", "StageHudAutoTotal", true,
+				"If true, total is the highest stagesN sprite found (fallback 8). If false, use StageHudTotal.");
+			StageHudTotal = Config.Bind("HUD", "StageHudTotal", 8,
+				"Total stages shown in Stage: x/total when StageHudAutoTotal is false.");
+			ShowGalleryCgCounter = Config.Bind("HUD", "ShowGalleryCgCounter", true,
+				"Show CGs: unlocked/total at the top of the gallery (4 poses x stages 0-8 = 36).");
 
 			// Mirror into PlayerPrefs so in-game toggles and config stay aligned after load.
 			SyncPrefsFromConfig();
 
 			var harmony = new Harmony(PluginGuid);
 			harmony.PatchAll(Assembly.GetExecutingAssembly());
+			// Silence DOTween safe-mode spam; kill tweens on Destroy (see DotweenSafety).
+			try
+			{
+				Patches.DotweenSafety.Configure();
+			}
+			catch (System.Exception ex)
+			{
+				Log.LogDebug($"Early DOTween configure: {ex.Message}");
+			}
 			Log.LogInfo($"{PluginName} v{PluginVersion} loaded.");
 		}
 
@@ -68,13 +89,15 @@ namespace BoobsRunnerMod
 		{
 			try
 			{
+				StageHud.Draw();
+				GalleryCgCounter.Draw();
 				ModSettingsUi.DrawImgui();
 			}
 			catch (System.Exception ex)
 			{
 				// Avoid spamming every frame
 				if (Time.frameCount % 120 == 0)
-					Log.LogError($"OnGUI settings draw failed: {ex.Message}");
+					Log.LogError($"OnGUI draw failed: {ex.Message}");
 			}
 		}
 
@@ -86,6 +109,8 @@ namespace BoobsRunnerMod
 			WritePref(ModPrefs.NoDroneWhenHaveOne, NoDroneWhenHaveOne.Value);
 			WritePref(ModPrefs.DownDropsLedge, DownDropsLedge.Value);
 			WritePref(ModPrefs.FixDroneInteract, FixDroneInteract.Value);
+			WritePref(ModPrefs.ShowStageHud, ShowStageHud.Value);
+			WritePref(ModPrefs.ShowGalleryCgCounter, ShowGalleryCgCounter.Value);
 		}
 
 		internal static void WritePref(string key, bool value)
@@ -116,5 +141,7 @@ namespace BoobsRunnerMod
 		public const string NoDroneWhenHaveOne = "BRMod_NoDroneWhenHaveOne";
 		public const string DownDropsLedge = "BRMod_DownDropsLedge";
 		public const string FixDroneInteract = "BRMod_FixDroneInteract";
+		public const string ShowStageHud = "BRMod_ShowStageHud";
+		public const string ShowGalleryCgCounter = "BRMod_ShowGalleryCgCounter";
 	}
 }
